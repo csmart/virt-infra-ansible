@@ -1,0 +1,33 @@
+---
+## YAML based inventory, see:
+## https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+#
+## Define the KVM host, it is referenced in the play by the "kvmhost" group
+## This example is localhost, but you can set whatever vars you need to here
+## The KVM host is where the networks are defined, under either "absent" or "present"
+## This allows us to clean up and remove networks you no-longer need
+kvmhost:
+  hosts:
+    # Put your KVM host connection and settings here
+    localhost:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
+  vars:
+    # Networks are a list, you can add more than one
+    # You can create and remove NAT networks on kvmhost (creating bridges not supported)
+    # The 'default' network is the standard one shipped with libvirt
+    # By default we don't remove any networks (empty absent list)
+    virt_infra_host_networks:
+      absent:
+        - name: "other"
+      present:
+        - name: "default"
+          ip_address: "192.168.112.1"
+          subnet: "255.255.255.0"
+          dhcp_start: "192.168.112.2"
+          dhcp_end: "192.168.112.254"
+        - name: "example"
+          ip_address: "192.168.113.1"
+          subnet: "255.255.255.0"
+          dhcp_start: "192.168.113.2"
+          dhcp_end: "192.168.113.99"

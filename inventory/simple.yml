@@ -1,0 +1,10 @@
+---
+## YAML based inventory, see:
+## https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+#
+## Simple example using defaults to spin up 3 CentOS guests
+simple:
+  hosts:
+    simple-centos-7-[0:2]:
+      ansible_python_interpreter: /usr/bin/python
+  vars:

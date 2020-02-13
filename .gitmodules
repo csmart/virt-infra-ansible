@@ -1,0 +1,3 @@
+[submodule "roles/ansible-role-virt-infra"]
+	path = roles/ansible-role-virt-infra
+	url = https://github.com/csmart/ansible-role-virt-infra.git
