@@ -70,12 +70,14 @@ delete and clean up) are supported.
 
 You can set whatever memory, CPU, disks and network cards you want for your
 guests, either via hostgroups or individually. A mixture of multiple disks is
-supported, including _scsi_, _sata_, _virtio_ and even _nvme_.
+supported, including _scsi_ (which can also be SSDs), _sata_, _virtio_ and even
+_nvme_.
 
 You can create private NAT libvirt networks on the KVM host and then put VMs on
 any number of them. Guests can use those libvirt networks or _existing_ bridge
-devices (e.g. br0) on the KVM host (this won't create bridges on the host, but
-it will check that the bridge interface exists).
+devices (e.g. br0) and Open vSwitch (OVS) bridge on the KVM host (this won't
+create bridges on the host, but it will check that the bridge interface
+exists). You can specify the MAC for each interface if you require.
 
 This supports various distros and uses their [cloud images](#cloud-images) for
 convenience (although you could use your own images). I've tested CentOS,
@@ -407,6 +409,7 @@ virt_infra_ssh_pwauth: true
 # "type" is optional, both "nat" and "bridge" are supported
 #  - "nat" is default type and should be a libvirt network
 #  - "bridge" type requires the bridge interface (e.g. br0) to already exist on KVM host
+#  - "ovs" type requires the OVS bridge interface (e.g. ovsbr0) to already exist on KVM host
 # "model" is also optional
 virt_infra_networks:
   - name: "default"
@@ -502,8 +505,8 @@ kvmhost:
 The KVM host is where the libvirt networks are created and therefore specified
 as vars under that hostgroup.
 
-Here is an example which makes sure two networks are created and one has been
-deleted.
+Here is an example which makes sure three networks are created (two are libvirt
+managed the other is ovs) and one has been deleted.
 
 ```yaml
 ---
@@ -518,10 +521,6 @@ kvmhost:
     virt_infra_host_networks:
       absent:
         - name: "example-removed"
-          ip_address: "192.168.255.1"
-          subnet: "255.255.255.0"
-          dhcp_start: "192.168.255.2"
-          dhcp_end: "192.168.255.254"
       present:
         - name: "example"
           ip_address: "172.31.255.1"
@@ -533,6 +532,24 @@ kvmhost:
           subnet: "255.255.255.0"
           dhcp_start: "10.255.255.2"
           dhcp_end: "10.255.255.254"
+        - name: ovs-bridge
+          bridge_dev: ovs-bridge
+          type: ovs
+          portgroup:
+            - name: ovs-trunk
+              trunk: true
+              native_vlan: 1
+              vlan:
+                - 1
+                - 2
+            - name: home
+              native_vlan: 1
+              vlan:
+                - 1
+            - name: guest
+              native_vlan: 2
+              vlan:
+                - 2
 ```
 
 #### Guests
@@ -578,6 +595,9 @@ example:
         - name: "extra_network"
           type: nat
           model: e1000
+        - name: ovs-bridge
+          portgroup: guest
+          type: ovs
       virt_infra_disks:
         - name: "boot"
         - name: "nvme"
