@@ -24,6 +24,7 @@ example:
         - name: "boot"
           io: "{{ virt_infra_disk_io }}"
           cache: "{{ virt_infra_disk_cache }}"
+          keep: true
         - name: "data"
           size: "20"
       ansible_python_interpreter: /usr/bin/python
@@ -78,16 +79,21 @@ example:
       virt_infra_distro_image: eoan-server-cloudimg-amd64.img
       virt_infra_distro_image_url: http://cloud-images.ubuntu.com/eoan/current/eoan-server-cloudimg-amd64.img
       virt_infra_distro_image_checksum_url: http://cloud-images.ubuntu.com/eoan/current/SHA256SUMS
-      virt_infra_variant: ubuntu18.04
   vars:
     ansible_python_interpreter: /usr/bin/python3
     virt_infra_disks:
       - name: "boot"
-      - name: "data"
+      - name: "data-scsi"
         size: "40"
-        bus: "scsi"
-      - name: "data2"
+        keep: true
+      - name: "data-ssd"
+        ssd: "true"
+      - name: "data-sata"
         bus: "sata"
+      - name: "data-virtio"
+        bus: "virtio"
+      - name: "data-nvme"
+        bus: "nvme"
     virt_infra_networks:
       - name: "default"
         type: "nat"
