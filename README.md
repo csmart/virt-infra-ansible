@@ -624,6 +624,7 @@ example:
       - name: "boot"
       - name: "data"
         bus: "sata"
+        keep: true
     virt_infra_networks:
       - "example"
 ```
