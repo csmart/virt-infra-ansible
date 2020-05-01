@@ -10,22 +10,16 @@
 example:
   hosts:
     example-centos-7:
+      virt_infra_vbmc_port: 62300
       virt_infra_state: running
       virt_infra_variant: centos7.0
       virt_infra_distro_image: CentOS-7-x86_64-GenericCloud.qcow2
-      virt_infra_user: other
       virt_infra_timezone: "Australia/Melbourne"
       virt_infra_ram: 2048
-      virt_infra_networks:
-        - name: "example"
-          type: "nat"
-          model: "e1000"
       virt_infra_disks:
         - name: "boot"
-          io: "{{ virt_infra_disk_io }}"
-          cache: "{{ virt_infra_disk_cache }}"
-          keep: true
         - name: "data"
+          keep: true
           size: "20"
       ansible_python_interpreter: /usr/bin/python
     example-centos-8:
@@ -85,7 +79,6 @@ example:
       - name: "boot"
       - name: "data-scsi"
         size: "40"
-        keep: true
       - name: "data-ssd"
         ssd: "true"
       - name: "data-sata"
@@ -96,5 +89,3 @@ example:
         bus: "nvme"
     virt_infra_networks:
       - name: "default"
-        type: "nat"
-        model: "virtio"
