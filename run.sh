@@ -19,10 +19,13 @@ if ! type ansible-playbook &>/dev/null ; then
 	fi
 	case "${ID,,}" in
 		centos)
-			echo sudo dnf -y install epel-release
-			sudo dnf -y install epel-release
-			echo sudo dnf -y install ansible
-			sudo dnf -y install ansible
+			if [[ "${VERSION_ID}" -eq "7" ]] ; then
+				PKG_MGR=yum
+			fi
+			echo sudo ${PKG_MGR:-dnf} -y install epel-release
+			sudo ${PKG_MGR:-dnf} -y install epel-release
+			echo sudo ${PKG_MGR:-dnf} -y install ansible
+			sudo ${PKG_MGR:-dnf} -y install ansible
 			;;
 		fedora)
 			echo sudo dnf -y install ansible
