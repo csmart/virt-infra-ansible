@@ -10,7 +10,6 @@
 example:
   hosts:
     example-centos-7:
-      virt_infra_vbmc_port: 62300
       virt_infra_state: running
       virt_infra_variant: centos7.0
       virt_infra_distro_image: CentOS-7-x86_64-GenericCloud.qcow2
@@ -19,30 +18,29 @@ example:
       virt_infra_disks:
         - name: "boot"
         - name: "data"
-          keep: true
           size: "20"
       ansible_python_interpreter: /usr/bin/python
     example-centos-8:
       virt_infra_state: running
       virt_infra_variant: centos7.0
-      virt_infra_distro_image: CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
-      virt_infra_distro_image_url: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.1.1911-20200113.3.x86_64.qcow2
+      virt_infra_distro_image: CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
+      virt_infra_distro_image_url: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
       virt_infra_distro_image_checksum_url: https://cloud.centos.org/centos/8/x86_64/images/CHECKSUM
       ansible_python_interpreter: /usr/libexec/platform-python
-    example-fedora-30:
-      virt_infra_state: destroyed
-      virt_infra_autostart: yes
-      virt_infra_distro: fedora
-      virt_infra_distro_image: Fedora-Cloud-Base-30-1.2.x86_64.qcow2
-      virt_infra_distro_image_url: https://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-Base-30-1.2.x86_64.qcow2
-      virt_infra_distro_image_checksum_url: http://download.fedoraproject.org/pub/fedora/linux/releases/30/Cloud/x86_64/images/Fedora-Cloud-30-1.2-x86_64-CHECKSUM
-      virt_infra_variant: fedora-unknown
     example-fedora-31:
-      virt_infra_state: running
+      virt_infra_state: shutdown
       virt_infra_distro: fedora
       virt_infra_distro_image: Fedora-Cloud-Base-31-1.9.x86_64.qcow2
       virt_infra_distro_image_url: https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2
       virt_infra_distro_image_checksum_url: https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-31-1.9-x86_64-CHECKSUM
+      virt_infra_variant: fedora-unknown
+    example-fedora-32:
+      virt_infra_state: running
+      virt_infra_autostart: yes
+      virt_infra_distro: fedora
+      virt_infra_distro_image: Fedora-Cloud-Base-32-1.6.x86_64.qcow2
+      virt_infra_distro_image_url: https://download.fedoraproject.org/linux/releases/32/Cloud/x86_64/images/Fedora-Cloud-Base-32-1.6.x86_64.qcow2
+      virt_infra_distro_image_checksum_url: https://download.fedoraproject.org/linux/releases/32/Cloud/x86_64/images/Fedora-Cloud-32-1.6-x86_64-CHECKSUM
       virt_infra_variant: fedora-unknown
     example-debian-10:
       virt_infra_state: running
@@ -54,25 +52,26 @@ example:
     example-opensuse-15:
       virt_infra_state: running
       virt_infra_distro: opensuse
-      virt_infra_distro_image: openSUSE-Leap-15.1-JeOS.x86_64-15.1.0-OpenStack-Cloud-Current.qcow2
-      virt_infra_distro_image_url: https://download.opensuse.org/distribution/leap/15.1/jeos/openSUSE-Leap-15.1-JeOS.x86_64-15.1.0-OpenStack-Cloud-Current.qcow2
+      virt_infra_distro_image: openSUSE-Leap-15.2-JeOS.x86_64-OpenStack-Cloud.qcow2
+      virt_infra_distro_image_url: http://download.opensuse.org/distribution/leap/15.2/appliances/openSUSE-Leap-15.2-JeOS.x86_64-OpenStack-Cloud.qcow2
+      virt_infra_distro_image_checksum_url: http://download.opensuse.org/distribution/leap/15.2/appliances/openSUSE-Leap-15.2-JeOS.x86_64-OpenStack-Cloud.qcow2.sha256
       virt_infra_variant: opensuse-unknown
       virt_infra_disks:
         - name: "boot"
           bus: "scsi"
     example-ubuntu-bionic:
-      virt_infra_state: shutdown
+      virt_infra_state: undefined
       virt_infra_distro: ubuntu
       virt_infra_distro_image: bionic-server-cloudimg-amd64.img
       virt_infra_distro_image_url: http://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
       virt_infra_distro_image_checksum_url: http://cloud-images.ubuntu.com/bionic/current/SHA256SUMS
       virt_infra_variant: ubuntu18.04
-    example-ubuntu-eoan:
-      virt_infra_state: undefined
+    example-ubuntu-focal:
+      virt_infra_state: running
       virt_infra_distro: ubuntu
-      virt_infra_distro_image: eoan-server-cloudimg-amd64.img
-      virt_infra_distro_image_url: http://cloud-images.ubuntu.com/eoan/current/eoan-server-cloudimg-amd64.img
-      virt_infra_distro_image_checksum_url: http://cloud-images.ubuntu.com/eoan/current/SHA256SUMS
+      virt_infra_distro_image: focal-server-cloudimg-amd64.img
+      virt_infra_distro_image_url: http://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+      virt_infra_distro_image_checksum_url: http://cloud-images.ubuntu.com/focal/current/SHA256SUMS
   vars:
     ansible_python_interpreter: /usr/bin/python3
     virt_infra_disks:
@@ -85,7 +84,5 @@ example:
         bus: "sata"
       - name: "data-virtio"
         bus: "virtio"
-      - name: "data-nvme"
-        bus: "nvme"
     virt_infra_networks:
       - name: "default"

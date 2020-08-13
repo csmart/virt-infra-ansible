@@ -12,7 +12,6 @@ kvmhost:
     localhost:
       ansible_connection: local
       ansible_python_interpreter: /usr/bin/python3
-      virt_infra_vbmc: true
   vars:
     # Networks are a list, you can add more than one
     # You can create and remove NAT networks on kvmhost (creating bridges not supported)
@@ -27,8 +26,3 @@ kvmhost:
           subnet: "255.255.255.0"
           dhcp_start: "192.168.112.2"
           dhcp_end: "192.168.112.254"
-        - name: "example"
-          ip_address: "192.168.113.1"
-          subnet: "255.255.255.0"
-          dhcp_start: "192.168.113.2"
-          dhcp_end: "192.168.113.99"

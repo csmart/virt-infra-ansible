@@ -1,0 +1,31 @@
+---
+- hosts: all,!kvmhost
+  gather_facts: no
+  tasks:
+    - name: Upgrade all packages
+      package:
+        name: '*'
+        state: latest
+      become: true
+      register: result_package_update
+      retries: 30
+      delay: 10
+      until: result_package_update is succeeded
+
+    - name: Install packages
+      package:
+        name:
+          - git
+          - tmux
+          - vim
+        state: present
+      become: true
+      register: result_package_install
+      retries: 30
+      delay: 10
+      until: result_package_install is succeeded
+
+    - name: Reboot to boot updates
+      reboot:
+      become: true
+      when: result_package_update.changed
