@@ -25,6 +25,7 @@
 			* [libvirt networks](#libvirt-networks)
 				* [Using ovs-bridge in inventory](#using-ovs-bridge-in-inventory)
 		* [Guests](#guests)
+			* [Running custom shell commands on guest disk](#running-custom-shell-commands-on-guest-disk)
 			* [Using Linux bridge in inventory](#using-linux-bridge-in-inventory)
 			* [Using ovs-bridge in inventory](#using-ovs-bridge-in-inventory-1)
 	* [Cloud images](#cloud-images)
@@ -811,6 +812,32 @@ example:
         keep: true
     virt_infra_networks:
       - "example"
+```
+
+#### Running custom shell commands on guest disk
+
+Using the variable `virt_infra_disk_cmd`, you can create a list of shell
+commands that you want to be run on the guest disk, before the VM is created.
+These can be any shell command, and used for simple things you need to do
+before the VM is created, otherwise you should do it with Ansible afterwards.
+
+For example, setting a mirror on a Fedora guest:
+
+```yaml
+virt_infra_disk_cmd:
+  - sed -i s/^metalink/#metalink/g /etc/yum.repos.d/*repo
+  - sed -i s/^#baseurl/baseurl/g /etc/yum.repos.d/*repo
+  - dnf config-manager --save --setopt baseurl=http://path-to-mirror fedora
+  - dnf config-manager --save --setopt baseurl=http://path-to-mirror-updates updates
+```
+
+Or finding the fastest mirror on Debian:
+
+```yaml
+virt_infra_disk_cmd:
+  - apt-get update
+  - apt-get install -y netselect-apt
+  - netselect-apt -n -o /etc/apt/sources.list
 ```
 
 #### Using Linux bridge in inventory

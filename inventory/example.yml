@@ -20,6 +20,8 @@ example:
         - name: "data"
           size: "20"
       ansible_python_interpreter: /usr/bin/python
+      virt_infra_disk_cmd:
+        - yum -y install yum-plugin-fastestmirror
     example-centos-8:
       virt_infra_state: running
       virt_infra_variant: centos7.0
@@ -27,6 +29,8 @@ example:
       virt_infra_distro_image_url: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
       virt_infra_distro_image_checksum_url: https://cloud.centos.org/centos/8/x86_64/images/CHECKSUM
       ansible_python_interpreter: /usr/libexec/platform-python
+      virt_infra_disk_cmd:
+        - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
     example-fedora-31:
       virt_infra_state: shutdown
       virt_infra_distro: fedora
@@ -34,6 +38,8 @@ example:
       virt_infra_distro_image_url: https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2
       virt_infra_distro_image_checksum_url: https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-31-1.9-x86_64-CHECKSUM
       virt_infra_variant: fedora-unknown
+      virt_infra_disk_cmd:
+        - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
     example-fedora-32:
       virt_infra_state: running
       virt_infra_autostart: yes
@@ -42,6 +48,8 @@ example:
       virt_infra_distro_image_url: https://download.fedoraproject.org/linux/releases/32/Cloud/x86_64/images/Fedora-Cloud-Base-32-1.6.x86_64.qcow2
       virt_infra_distro_image_checksum_url: https://download.fedoraproject.org/linux/releases/32/Cloud/x86_64/images/Fedora-Cloud-32-1.6-x86_64-CHECKSUM
       virt_infra_variant: fedora-unknown
+      virt_infra_disk_cmd:
+        - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
     example-debian-10:
       virt_infra_state: running
       virt_infra_distro: debian
@@ -49,6 +57,10 @@ example:
       virt_infra_distro_image_url: http://cdimage.debian.org/cdimage/openstack/current/debian-10.2.0-openstack-amd64.qcow2
       virt_infra_distro_image_checksum_url: http://cdimage.debian.org/cdimage/openstack/current/SHA512SUMS
       virt_infra_variant: debiantesting
+      virt_infra_disk_cmd:
+        - apt-get update
+        - apt-get install -y netselect-apt
+        - netselect-apt -n -o /etc/apt/sources.list
     example-opensuse-15:
       virt_infra_state: running
       virt_infra_distro: opensuse
