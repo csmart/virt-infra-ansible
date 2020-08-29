@@ -159,17 +159,17 @@ automatically on supported distros).
 #### Fedora
 
 ```bash
- Create SSH key if you don't have one
+# Create SSH key if you don't have one
 ssh-keygen
 
- libvirtd
+# libvirtd
 sudo dnf install -y @virtualization
 sudo systemctl enable --now libvirtd
 
- Ansible
+# Ansible
 sudo dnf install -y ansible
 
- Other deps
+# Other deps
 sudo dnf install -y \
 git \
 genisoimage \
@@ -191,19 +191,19 @@ CentOS 7 won't work until we have `libselinux-python3` package, which is coming 
 But here are (hopefully) the rest of the steps for when it is available.
 
 ```bash
- Create SSH key if you don't have one
+# Create SSH key if you don't have one
 ssh-keygen
 
- libvirtd
+# libvirtd
 sudo yum groupinstall -y "Virtualization Host"
 sudo systemctl enable --now libvirtd
 
- Ansible
+# Ansible
 sudo yum install -y epel-release
 sudo yum install -y python36
 pip3 install --user ansible
 
- Other deps
+# Other deps
 sudo yum install -y \
 git \
 genisoimage \
@@ -219,18 +219,18 @@ virt-install
 #### CentOS 8
 
 ```bash
- Create SSH key if you don't have one
+# Create SSH key if you don't have one
 ssh-keygen
 
- libvirtd
+# libvirtd
 sudo dnf groupinstall -y "Virtualization Host"
 sudo systemctl enable --now libvirtd
 
- Ansible
+# Ansible
 sudo dnf install -y epel-release
 sudo dnf install -y ansible
 
- Other deps
+# Other deps
 sudo dnf install -y \
 git \
 genisoimage \
@@ -246,22 +246,22 @@ virt-install
 #### Debian
 
 ```bash
- Create SSH key if you don't have one
+# Create SSH key if you don't have one
 ssh-keygen
 
- libvirtd
+# libvirtd
 sudo apt update
 sudo apt install -y --no-install-recommends qemu-kvm libvirt-clients libvirt-daemon-system
 sudo systemctl enable --now libvirtd
 
- Ansible
+# Ansible
 sudo apt install -y gnupg2
 echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee -a /etc/apt/sources.list
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 sudo apt update
 sudo apt install -y ansible
 
- Other deps
+# Other deps
 sudo apt install -y --no-install-recommends \
 cloud-image-utils \
 dnsmasq \
@@ -281,17 +281,17 @@ virtinst
  Create SSH key if you don't have one
 ssh-keygen
 
- libvirtd
+# libvirtd
 sudo apt update
 sudo apt install -y --no-install-recommends libvirt-clients libvirt-daemon-system qemu-kvm
 sudo systemctl enable --now libvirtd
 
- Ansible
+# Ansible
 sudo apt install -y software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 
- Other deps
+# Other deps
 sudo apt install -y --no-install-recommends \
 dnsmasq \
 git \
@@ -310,10 +310,10 @@ If you're running JeOS, we need to change the kernel to `kernel-default` as
 `kernel-default-base` which comes with JeOS is missing KVM modules.
 
 ```bash
- Create SSH key if you don't have one
+# Create SSH key if you don't have one
 ssh-keygen
 
- Install suitable kernel
+# Install suitable kernel
 sudo zypper install kernel-default
 sudo reboot
 ```
@@ -321,14 +321,14 @@ sudo reboot
 Continue after reboot.
 
 ```bash
- libvirtd
+# libvirtd
 sudo zypper install -yt pattern kvm_server kvm_tools
 sudo systemctl enable --now libvirtd
 
- Ansible
+# Ansible
 sudo zypper install -y ansible
 
- Other deps
+# Other deps
 sudo zypper install -y \
 git \
 guestfs-tools \
@@ -518,22 +518,22 @@ The defaults should be something like this.
 ---
  Defaults for virt-infra Ansible role
 
-# Guest related
- Valid guest states are: running, shutdown, destroyed or undefined
+## Guest related
+# Valid guest states are: running, shutdown, destroyed or undefined
 virt_infra_state: running
 
- Guests are not autostarted on boot
+# Guests are not autostarted on boot
 virt_infra_autostart: "no"
 
- Guest user set to match KVM host user
+# Guest user set to match KVM host user
 virt_infra_user: "{{ lookup('env', 'USER' )}}"
 
- Password of default user (consider a vault if you need secure passwords)
- No root password by default
+# Password of default user (consider a vault if you need secure passwords)
+# No root password by default
 virt_infra_password: "password"
 virt_infra_root_password:
 
- VM specs for guests
+# VM specs for guests
 virt_infra_ram: "1024"
 virt_infra_ram_max: "{{ virt_infra_ram }}"
 virt_infra_cpus: "1"
@@ -541,37 +541,37 @@ virt_infra_cpus_max: "{{ virt_infra_cpus }}"
 virt_infra_cpu_model: "host-passthrough"
 virt_infra_machine_type: "q35"
 
- SSH keys are a list, you can add more than one
- If not specified, we default to all public keys on KVM host
+# SSH keys are a list, you can add more than one
+# If not specified, we default to all public keys on KVM host
 virt_infra_ssh_keys: []
 
- Whether to enable SSH password auth
+# Whether to enable SSH password auth
 virt_infra_ssh_pwauth: true
 
- Networks are a list, you can add more than one
- "type" is optional, both "nat" and "bridge" are supported
-  - "nat" is default type and should be a libvirt network
-  - "bridge" type requires the bridge interface (e.g. br0) to already exist on KVM host
-  - "ovs" type requires the OVS bridge interface (e.g. ovsbr0) to already exist on KVM host
- "model" is also optional
- "mtu" is also optional
+# Networks are a list, you can add more than one
+# "type" is optional, both "nat" and "bridge" are supported
+#  - "nat" is default type and should be a libvirt network
+#  - "bridge" type requires the bridge interface (e.g. br0) to already exist on KVM host
+#  - "ovs" type requires the OVS bridge interface (e.g. ovsbr0) to already exist on KVM host
+# "model" is also optional
+# "mtu" is also optional
 virt_infra_networks:
   - name: "default"
     type: "nat"
     model: "virtio"
     mtu: 9000
 
- Disks, support various libvirt options
- We generally don't set them though, and leave it to hypervisor default
+# Disks, support various libvirt options
+# We generally don't set them though, and leave it to hypervisor default
 virt_infra_disk_size: "20"
 virt_infra_disk_bus: "scsi"
 virt_infra_disk_io: "threads"
 virt_infra_disk_cache: "writeback"
 
- Disks are a list, you can add more than one
- If you override this, you must still include 'boot' device first in the list
- Only 'name' is required, others are optional (default size is 20GB)
- All guests require at least a boot drive (which is the default)
+# Disks are a list, you can add more than one
+# If you override this, you must still include 'boot' device first in the list
+# Only 'name' is required, others are optional (default size is 20GB)
+# All guests require at least a boot drive (which is the default)
 virt_infra_disks:
   - name: "boot"
     size: "{{ virt_infra_disk_size }}"
@@ -579,32 +579,32 @@ virt_infra_disks:
     io: "{{ virt_infra_disk_io }}"
     cache: "{{ virt_infra_disk_cache }}"
 
- Default distro is CentOS 7, override in guests or groups
+# Default distro is CentOS 7, override in guests or groups
 virt_infra_distro_image: "CentOS-7-x86_64-GenericCloud.qcow2"
 
- Determine supported variants on your KVM host with command, "osinfo-query os"
- This doesn't really make much difference to the guest, maybe slightly different bus
- You could probably just leave this as "centos7.0" for all distros, if you wanted to
+# Determine supported variants on your KVM host with command, "osinfo-query os"
+# This doesn't really make much difference to the guest, maybe slightly different bus
+# You could probably just leave this as "centos7.0" for all distros, if you wanted to
 virt_infra_variant: "centos7.0"
 
- These remaining distro vars are really here for reference and convenience, at the moment
+# These remaining distro vars are really here for reference and convenience, at the moment
 virt_infra_distro: "centos"
 virt_infra_distro_release: "7"
 virt_infra_distro_image_url: "https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2"
 virt_infra_distro_image_checksum_url: "https://cloud.centos.org/centos/7/images/sha256sum.txt"
 
-# KVM host related
- Connect to system libvirt instance
+## KVM host related
+# Connect to system libvirt instance
 virt_infra_host_libvirt_url: "qemu:///system"
 
- Path where disk images are kept
+# Path where disk images are kept
 virt_infra_host_image_path: "/var/lib/libvirt/images"
 
- Networks on kvmhost are a list, you can add more than one
- You can create and remove NAT networks on kvmhost (creating bridges not supported)
- The 'default' network is the standard one shipped with libvirt
- By default we don't remove any networks (empty absent list)
- You can set the MTU if required (not supported on OVS)
+# Networks on kvmhost are a list, you can add more than one
+# You can create and remove NAT networks on kvmhost (creating bridges not supported)
+# The 'default' network is the standard one shipped with libvirt
+# By default we don't remove any networks (empty absent list)
+# You can set the MTU if required (not supported on OVS)
 virt_infra_host_networks:
   absent: []
   present:
@@ -615,7 +615,7 @@ virt_infra_host_networks:
       dhcp_end: "192.168.112.254"
       mtu: 9000
 
- List of binaries to check for on kvmhost
+# List of binaries to check for on kvmhost
 virt_infra_host_deps:
   - qemu-img
   - osinfo-query
@@ -623,7 +623,7 @@ virt_infra_host_deps:
   - virt-customize
   - virt-sysprep
 
- Command for creating ISO images
+# Command for creating ISO images
 virt_infra_mkiso_cmd: genisoimage
 ```
 
@@ -747,8 +747,8 @@ because that's the default in default.yml.
 
 ```yaml
 ---
-# YAML based inventory, see:
-# https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+## YAML based inventory, see:
+## https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
 
 simple:
   hosts:
@@ -764,8 +764,8 @@ Here's an example setting various hostgroup and individual host vars.
 
 ```yaml
 ---
-# YAML based inventory, see:
-# https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+## YAML based inventory, see:
+## https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
 
 example:
   hosts:
@@ -824,20 +824,20 @@ before the VM is created, otherwise you should do it with Ansible afterwards.
 For example, setting a mirror on a Fedora guest:
 
 ```yaml
-virt_infra_disk_cmd:
-  - sed -i s/^metalink/#metalink/g /etc/yum.repos.d/*repo
-  - sed -i s/^#baseurl/baseurl/g /etc/yum.repos.d/*repo
-  - dnf config-manager --save --setopt baseurl=http://path-to-mirror fedora
-  - dnf config-manager --save --setopt baseurl=http://path-to-mirror-updates updates
+      virt_infra_disk_cmd:
+        - sed -i s/^metalink/#metalink/g /etc/yum.repos.d/*repo
+        - sed -i s/^#baseurl/baseurl/g /etc/yum.repos.d/*repo
+        - dnf config-manager --save --setopt baseurl=http://path-to-mirror fedora
+        - dnf config-manager --save --setopt baseurl=http://path-to-mirror-updates updates
 ```
 
 Or finding the fastest mirror on Debian:
 
 ```yaml
-virt_infra_disk_cmd:
-  - apt-get update
-  - apt-get install -y netselect-apt
-  - netselect-apt -n -o /etc/apt/sources.list
+      virt_infra_disk_cmd:
+        - apt-get update
+        - apt-get install -y netselect-apt
+        - netselect-apt -n -o /etc/apt/sources.list
 ```
 
 #### Using Linux bridge in inventory
