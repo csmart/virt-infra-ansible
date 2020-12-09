@@ -31,15 +31,6 @@ example:
       ansible_python_interpreter: /usr/libexec/platform-python
       virt_infra_disk_cmd:
         - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
-    example-fedora-31:
-      virt_infra_state: shutdown
-      virt_infra_distro: fedora
-      virt_infra_distro_image: Fedora-Cloud-Base-31-1.9.x86_64.qcow2
-      virt_infra_distro_image_url: https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2
-      virt_infra_distro_image_checksum_url: https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-31-1.9-x86_64-CHECKSUM
-      virt_infra_variant: fedora-unknown
-      virt_infra_disk_cmd:
-        - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
     example-fedora-32:
       virt_infra_state: running
       virt_infra_autostart: yes
@@ -50,6 +41,19 @@ example:
       virt_infra_variant: fedora-unknown
       virt_infra_disk_cmd:
         - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
+      virt_infra_ram: 4096
+      virt_infra_cpus: 4
+    example-fedora-33:
+      virt_infra_state: running
+      virt_infra_distro: fedora
+      virt_infra_distro_image: Fedora-Cloud-Base-33-1.2.x86_64.qcow2
+      virt_infra_distro_image_url: https://download.fedoraproject.org/pub/fedora/linux/releases/33/Cloud/x86_64/images/Fedora-Cloud-Base-33-1.2.x86_64.qcow2
+      virt_infra_distro_image_checksum_url: https://download.fedoraproject.org/pub/fedora/linux/releases/33/Cloud/x86_64/images/Fedora-Cloud-33-1.2-x86_64-CHECKSUM
+      virt_infra_variant: fedora-unknown
+      virt_infra_disk_cmd:
+        - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
+      virt_infra_ram: 4096
+      virt_infra_cpus: 4
     example-debian-10:
       virt_infra_state: running
       virt_infra_distro: debian
@@ -72,7 +76,7 @@ example:
         - name: "boot"
           bus: "scsi"
     example-ubuntu-bionic:
-      virt_infra_state: undefined
+      virt_infra_state: running
       virt_infra_distro: ubuntu
       virt_infra_distro_image: bionic-server-cloudimg-amd64.img
       virt_infra_distro_image_url: http://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img

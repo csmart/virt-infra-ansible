@@ -124,7 +124,7 @@ inventory files and things like 'equalto' comparisons.
 ### KVM
 
 A working x86_64 KVM host where the user running Ansible can communicate with
-libvirtd via sudo. I have tested this on CentOS 8, Fedora 31, Debian 10, Ubuntu
+libvirtd via sudo. I have tested this on CentOS 8, Fedora 31+, Debian 10, Ubuntu
 Bionic/Eoan and openSUSE 15 hosts, but other Linux machines probably work.
 
 It expects hardware support for KVM in the CPU so that we an create accelerated
@@ -890,10 +890,10 @@ I have tested the following guests:
   * https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
 * CentOS 8
   * https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
-* Fedora 31
-  * https://download.fedoraproject.org/pub/fedora/linux/releases/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2
 * Fedora 32
   * https://download.fedoraproject.org/linux/releases/32/Cloud/x86_64/images/Fedora-Cloud-Base-32-1.6.x86_64.qcow2
+* Fedora 33
+  * https://download.fedoraproject.org/pub/fedora/linux/releases/33/Cloud/x86_64/images/Fedora-Cloud-Base-33-1.2.x86_64.qcow2
 * Debian 10
   * http://cdimage.debian.org/cdimage/openstack/current/debian-10.2.0-openstack-amd64.qcow2
 * Ubuntu 18.04 LTS
