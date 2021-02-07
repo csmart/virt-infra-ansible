@@ -578,7 +578,7 @@ virt_infra_state: running
 virt_infra_autostart: "no"
 
 # Guest user set to match KVM host user
-virt_infra_user: "{{ lookup('env', 'USER' )}}"
+virt_infra_user: "{{ hostvars[groups['kvmhost'][0]].ansible_env.USER }}"
 
 # Password of default user (consider a vault if you need secure passwords)
 # No root password by default
