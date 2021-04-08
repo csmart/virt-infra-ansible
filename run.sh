@@ -7,7 +7,6 @@
 # ./run.sh --inventory ~/my_inventory --limit kvmhost,guests -e virt_infra_state=undefined
 
 DIR="$(dirname "$(readlink -f "${0}")")"
-cd "${DIR}"
 source /etc/os-release
 
 # Check for dependencies
@@ -69,4 +68,4 @@ if ! type ansible-playbook &>/dev/null ; then
 	echo "Continuing with Ansible playbook!"
 fi
 
-exec ansible-playbook ./virt-infra.yml ${@}
+exec ansible-playbook "${DIR}/virt-infra.yml" ${@}
