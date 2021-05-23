@@ -68,4 +68,10 @@ if ! type ansible-playbook &>/dev/null ; then
 	echo "Continuing with Ansible playbook!"
 fi
 
+if [[ -z "$(ls -1 "${DIR}/roles/ansible-role-virt-infra/")" ]]; then
+	echo "Role git submodule not found, pulling now.."
+	git submodule init
+	git submodule update
+fi
+
 exec ansible-playbook "${DIR}/virt-infra.yml" ${@}

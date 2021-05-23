@@ -4,6 +4,7 @@
 * [Too long; didn't read](#too-long-didnt-read)
 * [Too long; but gonna read anyway](#too-long-but-gonna-read-anyway)
 	* [Requirements](#requirements)
+		* [Get the code](#get-the-code)
 		* [Ansible](#ansible)
 		* [KVM](#kvm)
 		* [Other tools](#other-tools)
@@ -114,13 +115,23 @@ different sizes with multiple networks, disks and even distros!
 
 ## Requirements
 
-All that's really needed is a Linux host capable of running KVM, some guest
-images and a basic inventory. The Ansible will do the rest (on supported
-distros).
+All that's really needed is a Linux host capable of running KVM with `git`
+installed, some guest images and a basic inventory. The Ansible will do the
+rest (on supported distros).
 
 For supported distros, the `run.sh` script will install Ansible if it is not
 found. The plays will also install KVM, libvirtd and other required packages
 and also make sure the libvirtd is running.
+
+### Get the code
+
+Once you've installed `git` on your Linux box, _recursively_ clone this repo
+which will pull in the role.
+
+```bash
+git clone --recursive https://github.com/csmart/virt-infra-ansible.git
+cd virt-infra-ansible
+```
 
 ### Ansible
 
