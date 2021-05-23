@@ -624,8 +624,10 @@ virt_infra_disk_cache: "writeback"
 # If you override this, you must still include 'boot' device first in the list
 # Only 'name' is required, others are optional (default size is 20GB)
 # All guests require at least a boot drive (which is the default)
+# Backing images are used by default, if you want a copy, set clone: true
 virt_infra_disks:
   - name: "boot"
+    clone: false
     size: "{{ virt_infra_disk_size }}"
     bus: "{{ virt_infra_disk_bus }}"
     io: "{{ virt_infra_disk_io }}"

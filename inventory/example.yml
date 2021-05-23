@@ -92,6 +92,7 @@ example:
     ansible_python_interpreter: /usr/bin/python3
     virt_infra_disks:
       - name: "boot"
+        clone: false
       - name: "data-scsi"
         size: "40"
       - name: "data-ssd"
