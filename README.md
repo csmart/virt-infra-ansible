@@ -30,6 +30,8 @@
 			* [Running custom shell commands on guest disk](#running-custom-shell-commands-on-guest-disk)
 			* [Using Linux bridge in inventory](#using-linux-bridge-in-inventory)
 			* [Using ovs-bridge in inventory](#using-ovs-bridge-in-inventory-1)
+			* [Static network configuration with cloud-init](#static-network-configuration-with-cloud-init)
+				* [Network device names and MAC addresses](#network-device-names-and-mac-addresses)
 	* [Cloud images](#cloud-images)
 	* [Running the playbook](#running-the-playbook)
 		* [Cleanup](#cleanup)
@@ -944,6 +946,80 @@ will automatically set up the ports for your VMs and you.
 Once your VMs are running, you can see their OVS ports with `sudo ovs-vsctl
 show` on the KVM host.
 
+#### Static network configuration with cloud-init
+
+Guest network interfaces can be configured statically using network
+configuration v2 support in cloud-init. Currently only ethernet devices are
+supported (not bonds, bridges or VLANs).
+
+For details, see the [cloud-init
+documentation](https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html).
+
+Some distros might not support this, so in order to activate network config
+please enable the following variable for your guests:
+
+```yaml
+virt_infra_network_config: true
+```
+
+The network config file for cloud-init ISO is then populated with new optional
+network configuration options for each VM's network interfaces, including:
+
+ - device (_string_ for device name, defaults to generated `eth0`, `eth1`, etc)
+ - addresses (_list_)
+ - dhcp4 (_boolean_, disabled if addresses is defined, otherwise true)
+ - dhcp6 (_boolean_, disabled if addresses is defined, otherwise true)
+ - gateway4 (_string_ for IPv4 default gateway)
+ - gateway6 (_string_ for IPv6 default gateway)
+ - nameservers (_dict_)
+   - search (_list_ of DNS domain search)
+   - addresses (_list_ of DNS servers)
+ - routes (_list_ of _dicts_)
+   - to (_string_ for subnet to route to)
+   - via (_string_ for gateway address/subnet)
+   - metric (_int_)
+
+**NOTE:** Due to the way cloud-init works (see documentation link above), if
+DHCP is enabled then some manual settings (including gateway and nameservers)
+are ignored. Manual routes are kept.
+
+It is worth noting that _none_ of the options above are actually required (will
+default to `eth0` and `dhcp`), but here is an example:
+
+```yaml
+  virt_infra_networks:
+    - name: default
+      device: eth0
+      addresses:
+        - 192.168.0.123/24
+      gateway4: 192.168.0.1
+      nameservers:
+        search: [foo.local, bar.local]
+        addresses: [8.8.8.8]
+      routes:
+        - to: 10.0.0.0/24
+          via: 192.168.0.254
+          metric: 100
+```
+
+##### Network device names and MAC addresses
+
+The network config format requires specifying a network device to configure,
+which needs to match the actual interface to work properly. Unfortunately,
+there's no way to always know that, as some distros will enable persistent
+names and others won't.
+
+For example, if we say "eth0" but the interfaces are actually "ens0" instead,
+then the config will still be written to `eth0` and therefore not actually
+applied to `ens0`.
+
+To make this work, we need to rename the interface so that it will match the
+configuration, however in order to ensure we pick the exact interface we must
+match on MAC address.
+
+Therefore, if MAC addresses are not specified, each interface in the network
+list will have an idempotent one generated based on the inventory hostname and
+the interface's order in the list.
 
 ## Cloud images
 
