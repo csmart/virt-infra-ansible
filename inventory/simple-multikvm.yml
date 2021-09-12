@@ -1,0 +1,27 @@
+---
+## YAML based inventory, see:
+## https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+#
+## Simple example using defaults to spin up 3 CentOS guests
+## This is on multiple KVM hosts, see kvmhost.yml
+simple_multikvm:
+  hosts:
+    simple-multikvm-centos-8-[1:3]:
+  vars:
+    ansible_python_interpreter: /usr/libexec/platform-python
+  children:
+    kvmhost_1:
+      hosts:
+        simple-multikvm-centos-8-1:
+      vars:
+        kvmhost: kvmhost1
+    kvmhost_2:
+      hosts:
+        simple-multikvm-centos-8-2:
+      vars:
+        kvmhost: kvmhost2
+    kvmhost_3:
+      hosts:
+        simple-multikvm-centos-8-3:
+      vars:
+        kvmhost: kvmhost3
