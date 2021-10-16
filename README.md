@@ -67,9 +67,10 @@ using defaults.
 
 ```bash
 curl -O https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-20210603.0.x86_64.qcow2
+sudo mkdir -p /var/lib/libvirt/images
 sudo mv -iv CentOS-Stream-GenericCloud-8-20210603.0.x86_64.qcow2 /var/lib/libvirt/images/
 
-git clone -b multi-kvmhost --recursive https://github.com/csmart/virt-infra-ansible.git
+git clone --recursive https://github.com/csmart/virt-infra-ansible.git
 cd virt-infra-ansible
 
 ./run.sh --limit kvmhost,simple
