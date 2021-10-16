@@ -16,7 +16,8 @@ if ! type ansible-playbook &>/dev/null ; then
 		echo "OK, please install it and retry."
 		exit 1
 	fi
-	case "${ID,,}" in
+	DISTRO=${ID_LIKE:-${ID}}
+	case "${DISTRO,,}" in
 		centos)
 			if [[ "${VERSION_ID}" -eq "7" ]] ; then
 				PKG_MGR=yum
