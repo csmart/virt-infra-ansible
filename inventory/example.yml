@@ -25,9 +25,9 @@ example:
     example-centos-8:
       virt_infra_state: running
       virt_infra_variant: centos7.0
-      virt_infra_distro_image: CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
-      virt_infra_distro_image_url: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
-      virt_infra_distro_image_checksum_url: https://cloud.centos.org/centos/8/x86_64/images/CHECKSUM
+      virt_infra_distro_image: "CentOS-Stream-GenericCloud-8-20210603.0.x86_64.qcow2"
+      virt_infra_distro_image_url: "https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-20210603.0.x86_64.qcow2"
+      virt_infra_distro_image_checksum_url: "https://cloud.centos.org/centos/8-stream/x86_64/images/CHECKSUM"
       ansible_python_interpreter: /usr/libexec/platform-python
       virt_infra_disk_cmd:
         - echo 'fastestmirror=1' >> /etc/dnf/dnf.conf
