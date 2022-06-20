@@ -66,9 +66,9 @@ Spin up three CentOS 8 guests from _simple_ Ansible hostgroup on localhost,
 using defaults.
 
 ```bash
-curl -O https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-20210603.0.x86_64.qcow2
+curl -O https://cloud.centos.org/centos/8-stream/x86_64/images/CentOS-Stream-GenericCloud-8-20220125.1.x86_64.qcow2
 sudo mkdir -p /var/lib/libvirt/images
-sudo mv -iv CentOS-Stream-GenericCloud-8-20210603.0.x86_64.qcow2 /var/lib/libvirt/images/
+sudo mv -iv CentOS-Stream-GenericCloud-8-20220125.1.x86_64.qcow2 /var/lib/libvirt/images/
 
 git clone --recursive https://github.com/csmart/virt-infra-ansible.git
 cd virt-infra-ansible
